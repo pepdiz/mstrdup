@@ -14,15 +14,15 @@ This tools requires a MicroStrategy installation with the following tools instal
 * The code contains administrative passwords in clear text (you should set the relevant ones in special variables in code)
 * It also relies on hard coded paths you should update to fullfill your needs
 
-# build
+# Build
 * clone the repository
 * run make.bat at root folder
 
-# install 
-Just copy the mdup.exe file to whatever you want
+# Install 
+Just copy the mdup.exe file to wherever you want
 
-# configuration
-All configuratio is done in a the configuration file *mdup.cfg* which must be located at user home directory. 
+# Configuration
+All configuration is done in a the configuration file *mdup.cfg* which must be located at user home directory. 
 To know the right place just run mdup.exe first time (when there's no configuration file) and a message will be displayed telling the configuration file name and location.
 
 Allowed properties in configuration file are:

@@ -1,0 +1,131 @@
+<!--MicroStrategy Project Duplicate XML definition file-->
+<MicroStrategyDuplicate>
+<GeneralInformation>
+<PropertyDef Name="Version" Value="1.0"/>
+<PropertyDef Name="DateCreated" Value="21/11/2023"/>
+<PropertyDef Name="TimeCreated" Value="12:04:23"/>
+</GeneralInformation>
+<SourceProjectSource>
+<PropertyDef Name="Name" Value="PRJ SRC 1"/>
+<PropertyDef Name="Login" Value="user1"/>
+<PropertyDef Name="UseNTAuthentication" Value="False"/>
+</SourceProjectSource>
+<DestinationProjectSource>
+<PropertyDef Name="Name" Value="PRJ SRC 2"/>
+<PropertyDef Name="Login" Value="user2"/>
+<PropertyDef Name="UseNTAuthentication" Value="False"/>
+</DestinationProjectSource>
+<SourceProject>
+<PropertyDef Name="Name" Value="PROJECT NAME 1"/>
+</SourceProject>
+<DestinationProject>
+<PropertyDef Name="Name" Value="PROJECT NAME 1"/>
+<PropertyDef Name="Description" Value="Not available"/>
+<PropertyDef Name="Enable Journal Auditing" Value="True"/>
+<PropertyDef Name="Enable Quick Search" Value="True"/>
+<PropertyDef Name="Use Same Identifier as Source Project" Value="True"/>
+</DestinationProject>
+<Objects>
+<ProjectObjects>
+<PropertyDef Name="CopySchemaRelated Objects Only" Value="False"/>
+</ProjectObjects>
+<ConfigurationObjects>
+<PropertyDef Name="CopyProjectRelated Objects" Value="True"/>
+<Users>
+<Settings>
+<PropertyDef Name="MatchByLogin" Value="False"/>
+<PropertyDef Name="Copy" Value="Copy No Users"/>
+<PropertyDef Name="CopyAllGroups" Value="True"/>
+</Settings>
+<PropertiesOptions>
+<PropertyDef Name="MatchOption" Value="User Properties Merge"/>
+<Properties>
+<Property>
+<PropertyDef Name="Name" Value="Group Memberships"/>
+</Property>
+<Property>
+<PropertyDef Name="Name" Value="Privileges"/>
+</Property>
+<Property>
+<PropertyDef Name="Name" Value="Security Roles"/>
+</Property>
+<Property>
+<PropertyDef Name="Name" Value="Security Filters"/>
+</Property>
+<Property>
+<PropertyDef Name="Name" Value="Connection Mapping"/>
+</Property>
+<Property>
+<PropertyDef Name="Name" Value="Schedules"/>
+</Property>
+</Properties>
+</PropertiesOptions>
+</Users>
+<ProfileObjects>
+<PropertyDef Name="Exclude Empty Profiles" Value="False"/>
+<PropertyDef Name="Exclude All Profile Contents" Value="False"/>
+</ProfileObjects>
+<Schedules>
+<Settings>
+<PropertyDef Name="MatchByName" Value="False"/>
+</Settings>
+<PropertiesOptions>
+<PropertyDef Name="MatchOption" Value="Use Existing"/>
+</PropertiesOptions>
+</Schedules>
+<Connections>
+<Settings>
+<PropertyDef Name="MatchByName" Value="False"/>
+</Settings>
+<PropertiesOptions>
+<PropertyDef Name="MatchOption" Value="Use Existing"/>
+</PropertiesOptions>
+</Connections>
+<SecurityRoles>
+<Settings>
+<PropertyDef Name="MatchByName" Value="False"/>
+</Settings>
+<PropertiesOptions>
+<PropertyDef Name="MatchOption" Value="Use Existing"/>
+</PropertiesOptions>
+</SecurityRoles>
+<DBLogins>
+<Settings>
+<PropertyDef Name="MatchByName" Value="False"/>
+</Settings>
+<PropertiesOptions>
+<PropertyDef Name="MatchOption" Value="Use Existing"/>
+</PropertiesOptions>
+</DBLogins>
+<NarrowCasting>
+<PropertyDef Name="IncludeUserDeliverySubscription" Value="False"/>
+<PropertyDef Name="IncludeContactGroup" Value="False"/>
+<PropertyDef Name="IncludeContactDeliverySubscription" Value="False"/>
+<PropertiesOptions>
+<PropertyDef Name="MatchOption" Value="Use Existing"/>
+</PropertiesOptions>
+</NarrowCasting>
+</ConfigurationObjects>
+</Objects>
+<ViewEvents>
+<PropertyDef Name="Events" Value="True"/>
+<PropertyDef Name="AllEvents" Value="True"/>
+</ViewEvents>
+<LogFiles>
+<ProcessLogFile>
+<PropertyDef Name="Events" Value="True"/>
+<PropertyDef Name="Location" Value="C:\events.log"/>
+</ProcessLogFile>
+<StatisticsLogFile>
+<PropertyDef Name="Location" Value="C:\stats.log"/>
+</StatisticsLogFile>
+<Events>
+<PropertyDef Name="Location" Value="C:\bad.log"/>
+</Events>
+</LogFiles>
+<International>
+<Languages>
+<PropertyDef Name="LanguageList" Value="0"/>
+</Languages>
+</International>
+</MicroStrategyDuplicate>

@@ -64,7 +64,11 @@ CFG::read [file join $::starkit::topdir $CONFIG_FILE]
 CFG::read [file join $HOME_DIR $CONFIG_FILE]
 
 if { ! [::CFG::exist? ::CFG::PWD1] || ! [::CFG::exist? ::CFG::PWD2] || $::CFG::PWD1 == "" || $::CFG::PWD2 == "" } {
-	exitmessage "Error en parámetros, contraseñas incorrectas.\nEdita el fichero $CONFIG_FILE en el directorio $HOME_DIR para establecer las contraseñas PWD1 y PWD2"
+	exitmessage "Error en parÃ¡metros, contraseÃ±as incorrectas.\nEdita el fichero $CONFIG_FILE en el directorio $HOME_DIR para establecer las contraseÃ±as PWD1 y PWD2"
+}
+
+if { ! [::CFG::exist? ::CFG::PATH_PROJECTDUPLICATE] || $::CFG::PATH_PROJECTDUPLICATE == "" || ! [file exists $::CFG::PATH_PROJECTDUPLICATE] } {
+	exitmessage "$::CFG::PATH_PROJECTDUPLICATE \n No se puede encontrar la herramienta duplicateproject.exe.\nEdita el fichero $CONFIG_FILE en el directorio $HOME_DIR para establecer la ruta correcta a duplicateproject.exe"
 }
 
 set prg [lindex [split $argv0 /] end-1]
@@ -87,6 +91,9 @@ proc elOtroLado { host } {
 proc makeTempXML { org dest nomprj desprj prlog stlog evlog } {
 	global tmpxml
 
+	set USR($::CFG::PRJSRC1) $::CFG::ADMIN_USER1
+	set USR($::CFG::PRJSRC2) $::CFG::ADMIN_USER2
+
 	set ficxml [file join $::starkit::topdir duplicado.xml]
 	set fxml [open $ficxml]
 	set XML [read $fxml]
@@ -96,6 +103,8 @@ proc makeTempXML { org dest nomprj desprj prlog stlog evlog } {
 	set root [$doc documentElement]
 	set orgnode [$root selectNodes {/MicroStrategyDuplicate/SourceProjectSource/PropertyDef[@Name='Name']}]
 	set destnode [$root selectNodes {/MicroStrategyDuplicate/DestinationProjectSource/PropertyDef[@Name='Name']}]
+	set orgusrnode [$root selectNodes {/MicroStrategyDuplicate/SourceProjectSource/PropertyDef[@Name='Login']}]
+	set destusrnode [$root selectNodes {/MicroStrategyDuplicate/DestinationProjectSource/PropertyDef[@Name='Login']}]
 	set orgprjnode [$root selectNodes {/MicroStrategyDuplicate/SourceProject/PropertyDef[@Name='Name']}]
 	set destprjnode [$root selectNodes {/MicroStrategyDuplicate/DestinationProject/PropertyDef[@Name='Name']}]
 	set destprjdesnode [$root selectNodes {/MicroStrategyDuplicate/DestinationProject/PropertyDef[@Name='Description']}]
@@ -106,8 +115,10 @@ proc makeTempXML { org dest nomprj desprj prlog stlog evlog } {
 	$orgnode setAttribute Value $org
 	$destnode setAttribute Value $dest
 	$orgprjnode setAttribute Value $nomprj
+	$orgusrnode setAttribute Value $USR($org)
 	$destprjnode setAttribute Value $nomprj
 	$destprjdesnode setAttribute Value $desprj
+	$destusrnode setAttribute Value $USR($dest)
 	$processlognode setAttribute Value  $prlog 	
 	$statlognode setAttribute Value $stlog  	 
 	$eventlognode setAttribute Value $evlog  	
@@ -121,18 +132,18 @@ proc copiarprj { org dest nomprj desprj } {
 # return 1 if error , 0 if success
 	global tmpxml pathDespliegue carpetaDespliegue pathAmtega
 
-	set PW(PRODUCCION) $::CFG::PWD1
-	set PW(DESARROLLO) $::CFG::PWD2
+	set PW($::CFG::PRJSRC1) $::CFG::PWD1
+	set PW($::CFG::PRJSRC2) $::CFG::PWD2
 	set res 0
 	
 	if {[catch {
 		set orgpw $PW($org)
 		set destpw $PW($dest)
-		}]} {puts "origen o destino erróneo"; return 1}
+		}]} {puts "origen o destino errÃ³neo"; return 1}
 	
 	set momento [clock format [clock seconds] -format %Y%m%d_%H%M%S]
 	set carpetaDespliegue [file join $pathDespliegue [string map {" " _} $nomprj]_$momento]
-	
+
 	makeTempXML $org $dest $nomprj $desprj \
 		[string map {/ \\} "${carpetaDespliegue}/process.log"] \
 		[string map {/ \\} "${carpetaDespliegue}/stat.log"] \
@@ -149,7 +160,7 @@ proc copiarprj { org dest nomprj desprj } {
 			cleanup $carpetaDespliegue 
 		} else {
 			set finfo [open [file join $carpetaDespliegue info.txt] w]
-			puts $finfo {Copia de $nomprj \n origen: $org \n destino: $dest \n proyecto origen: $nomprj \n proyecto destino: $nomprj \n descripción: $desprj }
+			puts $finfo "Copia de $nomprj \n origen: $org \n destino: $dest \n proyecto origen: $nomprj \n proyecto destino: $nomprj \n descripciÃ³n: $desprj "
 			close $finfo
 			
 			if { [file isdirectory $pathAmtega]} {
@@ -179,10 +190,8 @@ if {! [file isdirectory $pathAmtega]} {
 
 if { $argc > 0 } {
 	wm withdraw .
-#	puts "copiar proyecto [lindex $argv 2] de [lindex $argv 0] a [lindex $argv 1]"
-#	puts $argv
 	if {[lindex $argv 0] == "?" } {
-		tk_messageBox -message "sintaxis:\n $prg ORIGEN DESTINO NOMBREPRJ \[DESCRIPCION\]\n\no sin parámetros para uso interactivo" -icon info -type ok -title "Duplicador ACME"
+		tk_messageBox -message "sintaxis:\n $prg ORIGEN DESTINO NOMBREPRJ \[DESCRIPCION\]\n\no sin parÃ¡metros para uso interactivo" -icon info -type ok -title "Duplicador ACME"
 	} else {
 		copiarprj [lindex $argv 0] [lindex $argv 1] [lindex $argv 2] [lindex $argv 3]	
 		if {[file exists $tmpxml]} {file delete $tmpxml}	
@@ -191,8 +200,6 @@ if { $argc > 0 } {
 } else {
 
 	package require Tk
-
-#	bind . <Destroy> { if {"%W" == "."} {if {[file exists $tmpxml]} {file delete $tmpxml}; exit} }
 	bind . <Destroy> { if {[file exists $tmpxml]} {file delete $tmpxml}; exit }
  
 	wm resizable . 0 0
@@ -214,13 +221,12 @@ if { $argc > 0 } {
 	pack .l2
 	entry .np -textvariable nombreprj
 	pack .np -fill both
-	label .l3 -text "Descripción del Proyecto"
+	label .l3 -text "DescripciÃ³n del Proyecto"
 	pack .l3
 	entry .dp -textvariable desprj
 	pack .dp -fill both
 	button .b -text "Copiar proyecto" -command {copiarprj [elOtroLado $dest] $dest $nombreprj $desprj}
 	pack .b
 	.f.rb2 select
-
-#	console show
+ 
 }

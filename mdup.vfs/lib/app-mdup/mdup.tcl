@@ -68,7 +68,7 @@ if { ! [::CFG::exist? ::CFG::PWD1] || ! [::CFG::exist? ::CFG::PWD2] || $::CFG::P
 }
 
 if { ! [::CFG::exist? ::CFG::PATH_PROJECTDUPLICATE] || $::CFG::PATH_PROJECTDUPLICATE == "" || ! [file exists $::CFG::PATH_PROJECTDUPLICATE] } {
-	exitmessage "$::CFG::PATH_PROJECTDUPLICATE \n No se puede encontrar la herramienta duplicateproject.exe.\nEdita el fichero $CONFIG_FILE en el directorio $HOME_DIR para establecer la ruta correcta a duplicateproject.exe"
+	exitmessage "$::CFG::PATH_PROJECTDUPLICATE \n No se puede encontrar la herramienta projectduplicate.exe.\nEdita el fichero $CONFIG_FILE en el directorio $HOME_DIR para establecer la ruta correcta a la herramienta"
 }
 
 set prg [lindex [split $argv0 /] end-1]
@@ -200,12 +200,12 @@ if { $argc > 0 } {
 } else {
 
 	package require Tk
+
 	bind . <Destroy> { if {[file exists $tmpxml]} {file delete $tmpxml}; exit }
  
 	wm resizable . 0 0
 	wm minsize . 350 130
 	wm title . "Duplicador ACME"
-	#wm geometry . 300x200+100+100
 	image create photo .coy -format gif -file $ficlogo
 	frame .f 
 	pack .f
@@ -228,5 +228,5 @@ if { $argc > 0 } {
 	button .b -text "Copiar proyecto" -command {copiarprj [elOtroLado $dest] $dest $nombreprj $desprj}
 	pack .b
 	.f.rb2 select
- 
+
 }

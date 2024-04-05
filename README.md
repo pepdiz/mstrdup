@@ -36,7 +36,7 @@ Allowed properties in configuration file are:
 * DEPLOY_HIST_PATH
 * PATH_PROJECTDUPLICATE 	
 
-PWD1 and PWD2 are required to be set or the program refuses to run. All the other properties are optional and will use default values.
+PWD1 and PWD2 are required to be set or the program refuses to run. All the other properties are optional and will use default values, but you should change PATH_PROJECTDUPLICATE to fit your environment.
 
 
 

@@ -19,7 +19,7 @@ This tools requires a MicroStrategy installation with the following tools instal
 * run make.bat at root folder
 
 # Install 
-Just copy the mdup.exe file to wherever you want
+Just copy the mstrdup.exe file to wherever you want
 
 # Configuration
 All configuration is done in a the configuration file *mdup.cfg* which must be located at user home directory. 
